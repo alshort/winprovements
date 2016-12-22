@@ -16,7 +16,9 @@ Shortcuts := {PasswordSafe: "S:\KeePass Password Safe 2\KeePass.exe"
              ,Explorer:     "Explorer"
              ,CtrlPnl:      "Control Panel"
              ,Editor:       "Notepad++"
-             ,Email:        "Thunderbird"}
+             ,Email:        "Thunderbird"
+			 ,Bash:         "bash.exe"
+			 ,CMD:          "cmd.exe"}
              
 HeadsetVolume := 15
              
@@ -35,6 +37,7 @@ SoundSet, 100
 ; ^ = Ctrl
 ; # = Win
 ; ! = Alt
+; + = Shift
 
 ; Google Chrome
 ^#c::
@@ -66,6 +69,16 @@ return
   Run, % Shortcuts["Email"]
 return
 
+; Bash
+^+#Space:: ;shell
+  Run, % Shortcuts["Bash"]
+return
+
+; CMD
+^+#!Space:: ;shell
+  Run, % Shortcuts["CMD"]
+return
+
 
 
 ; +---------------------+
@@ -84,30 +97,12 @@ return
 
 
 
-; +----------------+
-; | Typing-related |
-; +----------------+
-; Expansions
-::afaik::as far as I know
-::brb::Be right back!
-::btw::by the way
-::ttyl::Talk to you later!
-
-; Autocorrection
-::notepadd::notepad{+}{+}
-
-
-
-; +----------------+
-; | Helper Methods |
-; +----------------+
-
-; This is where I'd put my helper methods
-; IF I HAD SOME.
-
+; Override Windows-default behaviours
+#f::return
 
 
 ; +----------+
 ; | Includes |
 ; +----------+
+#Include %A_ScriptDir%/Autocorrection.ahk
 #Include %A_ScriptDir%/Explorer.ahk
