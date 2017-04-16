@@ -3,7 +3,6 @@
 ;
 ; Andrew Lamzed-Short
 
-; AHK Cruft
 #NoEnv  ; Performance and compatibility for future AutoHotkey releases.
 SendMode Input  ; Better speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Consistent starting directory.
@@ -20,8 +19,15 @@ Shortcuts := {PasswordSafe: "S:\KeePass Password Safe 2\KeePass.exe"
 			 ,Bash:         "bash.exe"
 			 ,CMD:          "cmd.exe"}
              
-HeadsetVolume := 15
-             
+global HeadsetVolume := 0
+global Notifier := ""
+
+; Load from configuration
+global Config := "P:\global.ini"
+IniRead, HeadsetVolume, %Config%, Headphones, Volume
+IniRead, Notifier, %Config%, Notifications, Program             
+			 
+
              
 ; +---------+
 ; | Startup |
@@ -69,14 +75,22 @@ return
   Run, % Shortcuts["Email"]
 return
 
+
 ; Bash
 ^+#Space:: ;shell
+  SetWorkingDir, P:\
   Run, % Shortcuts["Bash"]
+  SetWorkingDir %A_ScriptDir% 
 return
 
 ; CMD
 ^+#!Space:: ;shell
   Run, % Shortcuts["CMD"]
+return
+
+; Reload current script
+^#w::
+	Reload
 return
 
 
@@ -90,6 +104,8 @@ return
   SoundGet, CurrentVolume
   NewVolume := Floor(CurrentVolume) = 100 ? HeadsetVolume : 100
   SoundSet, %NewVolume%
+  
+  SendNotification("Volume", NewVolume)
 return
 
 ; Win + Alt + Down
@@ -98,7 +114,17 @@ return
 
 
 ; Override Windows-default behaviours
+#w::return
 #f::return
+
+
+; +-----------+
+; | Functions |
+; +-----------+
+SendNotification(title, txt) {
+	Run, %Notifier% -t %title% -m %txt%,,hide
+	return
+}
 
 
 ; +----------+

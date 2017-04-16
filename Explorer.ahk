@@ -12,7 +12,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 GetActiveExplorerWindow() {
   static objShell := ComObjCreate("Shell.Application")
-  WinHWND := WinActive("A")    ; Active window
+  WinHWND := WinActive("A")    ; Active explorer ("A") window
   for Item in objShell.Windows
     if (Item.HWND = WinHWND)
       return Item        ; Return active window object

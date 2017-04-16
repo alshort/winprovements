@@ -3,7 +3,7 @@
 ;
 ; Andrew Lamzed-Short
 
-; AHK Cruft
+
 #NoEnv  ; Performance and compatibility for future AutoHotkey releases.
 SendMode Input  ; Better speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Consistent starting directory.
@@ -15,7 +15,7 @@ SetWorkingDir %A_ScriptDir%  ; Consistent starting directory.
 ::Afaik::As far as I know
 
 ::brb::be right back
-::Brb::Be right back!
+::Brb::Be right back
 
 ::btw::by the way
 ::Btw::By the way
